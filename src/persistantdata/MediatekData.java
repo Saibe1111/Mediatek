@@ -23,8 +23,8 @@ public class MediatekData implements PersistentMediatek {
 		return null;
 	}
 
-	// va r�cup�rer le User dans la BD et le renvoie
-	// si pas trouv�, renvoie null
+	// va récupérer le User dans la BD et le renvoie
+	// si pas trouvé, renvoie null
 	@Override
 	public Utilisateur getUser(String login, String password) {
 		return null;

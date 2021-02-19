@@ -3,7 +3,7 @@ package mediatek2021;
 import java.util.List;
 
 public interface PersistentMediatek {
-// Jean-François Brette 01/01/2018
+// Jean-FranÃ§ois Brette 01/01/2018
 	
 	List<Document> catalogue(int type);
 	Document getDocument(int numDocument);
