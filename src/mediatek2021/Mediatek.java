@@ -10,7 +10,7 @@ import java.util.List;
  LES SERVLETS DOIVENT S'ADRESSER A CETTE CLASSE EXCLUSIVEMENT
  POUR INTERROGER LES DONNEES
 
- beaucoup des m�thodes de Mediatheque sont délèguées à l'attribut de persistance
+ beaucoup des méthodes de Mediatheque sont délèguées à l'attribut de persistance
  qui devra répercuter ces opérations sur les données persistantes
 
 */
@@ -42,7 +42,7 @@ public class Mediatek {
 
 // *********************** délègation **********************
 
-	// renvoie la liste de tous les documents de la biblioth�que
+	// renvoie la liste de tous les documents de la bibliothèque
 	// du type typeDoc
 
 	public List<Document> catalogue(int typeDoc) {
@@ -56,7 +56,7 @@ public class Mediatek {
 		return data.getUser(login, password);
 	}
 
-	// renvoie le document de num�ro numDocument
+	// renvoie le document de numéro numDocument
 	// si pas trouvé, renvoie null
 
 	public Document getDocument(int numDocument) {

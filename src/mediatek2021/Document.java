@@ -1,4 +1,4 @@
-// Jean-Fran�ois Brette 01/01/2018
+// Jean-François Brette 01/01/2018
 
 package mediatek2021;
 
