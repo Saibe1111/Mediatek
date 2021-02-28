@@ -24,7 +24,9 @@ public class InjectionServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		try {
-			Class.forName("persistantdata.MediatekData");
+			String nom = "persistantdata.MediatekData";
+			Class.forName(nom);
+			System.out.println("Injection de la dépendance: " + nom);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
