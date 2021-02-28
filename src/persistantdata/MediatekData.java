@@ -1,5 +1,6 @@
 package persistantdata;
 
+import java.sql.*;
 import java.util.List;
 
 import mediatek2021.*;
@@ -23,8 +24,8 @@ public class MediatekData implements PersistentMediatek {
 	/**
 	 * On bloque l'instanciation.
 	 */
-	private MediatekData() {
-	}
+	//private MediatekData() {
+	//}
 
 	
 	/**
@@ -46,6 +47,53 @@ public class MediatekData implements PersistentMediatek {
 	 */
 	@Override
 	public Utilisateur getUser(String login, String password) {
+		
+		Connection conn = getConnection();
+		
+        String sql = "SELECT * FROM Utilisateur WHERE Login=? AND Password=?";
+        
+        System.out.println("OK ?");
+        
+        try {
+        	PreparedStatement query = conn.prepareStatement(sql);
+        	query.setString(1, login);
+        	query.setString(2, password);
+        	
+            ResultSet rs    = query.executeQuery();
+
+            if(rs.next()) {
+            	
+            	String nom = rs.getString("Nom");
+            	
+            	Utilisateur utilisateur = new Utilisateur() {
+        			
+        			@Override
+        			public String password() {
+        				return password;
+        			}
+        			
+        			@Override
+        			public String login() {
+        				return login;
+        			}
+        			
+        			@Override
+        			public Object[] data() {
+        				
+        				Object[] o = new Object[3];
+        				o[0] = nom;
+        				
+        				return o;
+        			}
+        		};
+        		
+        		return utilisateur;
+            }
+			
+		} catch (SQLException e) {
+            System.out.println(e.getMessage());
+		}
+		
 		return null;
 	}
 
@@ -82,6 +130,44 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public void suppressDoc(int numDoc) throws SuppressException {
 		
+	}
+	
+	/**
+	 * Permet d'obtenir une connection avec la base de donnée
+	 * @param numDoc - Numéro du document que nous cherchons à supprimer.
+	 * @throws SuppressException - À définir <------
+	 */
+	private Connection getConnection() {
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		Connection conn = null;
+		
+		try {
+            //Liens vers la base de donnée
+			
+			//Sauvegarde de nos chemins:
+			//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
+			//Manil: 
+			
+            String url = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
+            // Créaction de la connexion avec la base de données
+            conn = DriverManager.getConnection(url);
+
+            System.out.println("La connexion avec la base de données est un succès");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+		//On renvoie la connexion
+		return conn;
 	}
 
 }
