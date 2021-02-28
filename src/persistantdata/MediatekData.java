@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.List;
 
 import mediatek2021.*;
+import persistantdata.utilisateur.Bibliothécaire;
 
 
 /**
@@ -24,8 +25,8 @@ public class MediatekData implements PersistentMediatek {
 	/**
 	 * On bloque l'instanciation.
 	 */
-	//private MediatekData() {
-	//}
+	private MediatekData() {
+	}
 
 	
 	/**
@@ -47,53 +48,33 @@ public class MediatekData implements PersistentMediatek {
 	 */
 	@Override
 	public Utilisateur getUser(String login, String password) {
-		
+		//Connexion à la base de données
 		Connection conn = getConnection();
-		
+		//On prépare la requête
         String sql = "SELECT * FROM Utilisateur WHERE Login=? AND Password=?";
         
-        System.out.println("OK ?");
-        
         try {
+        	//On prépare la requête
         	PreparedStatement query = conn.prepareStatement(sql);
+        	//On remplit la requête préparé
         	query.setString(1, login);
         	query.setString(2, password);
-        	
+        	//On exécute la requête préparé
             ResultSet rs    = query.executeQuery();
-
+            
+            //Si on a un résutat
             if(rs.next()) {
-            	
-            	String nom = rs.getString("Nom");
-            	
-            	Utilisateur utilisateur = new Utilisateur() {
-        			
-        			@Override
-        			public String password() {
-        				return password;
-        			}
-        			
-        			@Override
-        			public String login() {
-        				return login;
-        			}
-        			
-        			@Override
-        			public Object[] data() {
-        				
-        				Object[] o = new Object[3];
-        				o[0] = nom;
-        				
-        				return o;
-        			}
-        		};
-        		
-        		return utilisateur;
+            	//On récupère le prénom
+            	String prénom = rs.getString("Prénom");
+            	//On créer et retourn un Utilisateur bibliothécaire
+            	Utilisateur bibliothécaire = new Bibliothécaire(login,password,prénom);
+        		return bibliothécaire;
             }
 			
 		} catch (SQLException e) {
             System.out.println(e.getMessage());
 		}
-		
+		//Si on a pas trouvé on retourn null
 		return null;
 	}
 

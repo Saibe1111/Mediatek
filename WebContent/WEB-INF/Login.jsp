@@ -16,7 +16,6 @@
             <input name='txtPassword' type='password' value='' /> <br/>
             <br/>
             <button name='btnConnect' type='submit'>Connexion</button>
-            
         </form> 
 		
 	</body>

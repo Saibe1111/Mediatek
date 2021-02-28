@@ -12,52 +12,58 @@ import mediatek2021.Mediatek;
 import mediatek2021.Utilisateur;
 
 /**
- * Servlet implementation class Login
+ * @version 1.0 - 19/02/2021
+ * @author Manil RICHARD / Sébastien CUVELLIER
+ * Login permet la gestion de la connexion d'un utilisateur
  */
 @WebServlet("/login")
 public class Login extends HttpServlet {
+	
+	
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// On recupère le login d'un utilisateur qui se serai trompé de mot de passe
 		String login = request.getParameter( "txtLogin" );
         if ( login == null ) login = "";
-		
-		request.getRequestDispatcher( "/Login.jsp" ).forward( request, response );
+		//On lui renvoie la JSP
+		request.getRequestDispatcher( "/WEB-INF/Login.jsp" ).forward( request, response );
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//On récupère les paramètres de notre formulaire.
 		 String login = request.getParameter( "txtLogin" );
 	     String password = request.getParameter( "txtPassword" );
-
+	     
+	     //On créer un variable session si on n'arrive pas à en récupérer une.
 	     HttpSession session = request.getSession( true );
 	     session.setAttribute( "login", login );
-	     
+	     //On récupère l'instance de Mediatek
 	     Mediatek pm = Mediatek.getInstance();
+	     //On récupère l'utilisateur avec le mot de passe et le login qu'on luit donne
 	     Utilisateur u = pm.getUser(login, password);
 	     
+	     //Si l'utilisateur est null, y a un erreur on renvoie le formulaire de connexion
 	     if(u == null) {
-	    	 System.out.println("Utilisateur inconnu :/");
+	    	 request.getRequestDispatcher( "/WEB-INF/Login.jsp" ).forward( request, response );
+	    	 //Si l'utilisateur est =! null, on le redirige vers la page d'accueil
 	     }else {
-	    	 System.out.println("Utilisataeur : " + u.login());
+	    	 //On défini plusiers attributs
+	    	 session.setAttribute( "login", login );
+	    	 session.setAttribute( "prénom", u.data()[0] );
+	    	 session.setAttribute( "estConnecté", true );
+	    	 //On redirige vers l'accueil du site
+	    	 response.sendRedirect("accueil");
 	     }
 	     
-		request.getRequestDispatcher( "/Login.jsp" ).forward( request, response );
+		
 	}
 
 }
