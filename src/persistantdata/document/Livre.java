@@ -3,33 +3,32 @@ package persistantdata.document;
 import mediatek2021.Document;
 
 /**
- * @version 1.0 - 28/02/2021
+ * @version 1.0 - 02/03/2021
  * @author Manil RICHARD / Sébastien CUVELLIER
- * Class qui définit un CD.
+ * Class qui définit un livre.
  */
-public class CD implements Document{
-	
+public class Livre implements Document {
+
 	private String titre;
 	private String auteur;
 	private String codebarre;
 	
-	
 	/*
-	 * Constructeur du CD.
+	 * Constructeur du livre.
 	 * 
-	 * @param titre, titre du CD.
-	 * @param auteur, auteur du CD.
+	 * @param titre, titre du livre.
+	 * @param auteur, auteur du livre.
 	 */
-	public CD(String titre, String auteur) {
+	public Livre(String titre, String auteur) {
 		this.titre = titre;
 		this.auteur = auteur;
 	}
 
 
 	/*
-	 * Guetteur du CD.
+	 * Guetteur du livre.
 	 * 
-	 * @return, un objet qui définit un CD.
+	 * @return, un objet qui définit un livre.
 	 */
 	@Override
 	public Object[] data() {

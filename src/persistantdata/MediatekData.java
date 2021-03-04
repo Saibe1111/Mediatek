@@ -92,12 +92,35 @@ public class MediatekData implements PersistentMediatek {
 	
 	/**
 	 * Permet de rajouter un document à la base de donnée.
-	 * @param type - Permet de savoir le type du document.
+	 * @param type - Permet de savoir le type du document. 1-> Livre 2-> DVD 3-> CD
 	 * @param args - Contient les informations sur le document
 	 * @throws NewDocException - À définir <------
 	 */
 	@Override
 	public void newDocument(int type, Object... args) throws NewDocException {
+		
+	    String codeBarre = (String) args[2];
+	    String titre = (String) args[2];
+	    String auteur = (String) args[2];
+		
+		//Connexion à la base de données
+		Connection conn = getConnection();
+		//On prépare la requête
+		String sql = "INSERT INTO Document (type_document, auteur, titre, code_barre) VALUES (?,?,?,?)";
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, type);
+            pstmt.setString(2, auteur);
+            pstmt.setString(3, titre);
+            pstmt.setString(4, codeBarre);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		
+		//throw new NewDocException("Type de document inconnu !");
+		
+		
 		// args[0] -> le titre
 		// args [1] --> l'auteur
 		// etc en fonction du type et des infos optionnelles

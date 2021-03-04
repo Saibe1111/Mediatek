@@ -9,8 +9,8 @@
 	<body>
 		<h1>Bonjour, ${prénom}</h1>
 		<br>
-		<a href="ajout-document">Ajouter un doccument</a><br>
-		<a href="suppression-document">Supprimer un doccument</a>
+		<a href="ajouter-document">Ajouter un doccument</a><br>
+		<a href="supprimer-document">Supprimer un doccument</a>
 		<hr>
 		<form action="accueil" method="post">
 			<input type="submit" name="btnDisconnect" value="Déconnexion" />
