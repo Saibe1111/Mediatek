@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import mediatek2021.Mediatek;
 import mediatek2021.NewDocException;
+import services.utils.Vérification;
 
 /**
- * Servlet implementation class AjouterDocument
+ * @version 1.0 - 19/02/2021
+ * @author Sébastien CUVELLIER / Manil RICHARD
+ * Gestion de l'ajout de document
  */
 @WebServlet("/ajouter-document")
 public class AjouterDocument extends HttpServlet {
@@ -21,7 +24,12 @@ public class AjouterDocument extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (!Vérification.estConnecté(request, response)) {
+			return;
+		}
 		request.getRequestDispatcher( "/WEB-INF/AjoutDocument.jsp" ).forward( request, response );
+		
 	}
 
 	/**
@@ -29,15 +37,27 @@ public class AjouterDocument extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		if (!Vérification.estConnecté(request, response)) {
+			return;
+		}
+		
+		//On récupère les information du formulaire
 		String type = request.getParameter( "doc-select" );
 	    String codeBarre = request.getParameter( "txtCodeBarre" );
 	    String titre = request.getParameter( "txtTitre" );
 	    String auteur = request.getParameter( "txtAuteur" );
+	    Boolean adulte = false;
 	    
-	    Object[] document = new Object[3];
+	    if (request.getParameter( "checkboxAdulte" ) == "on") {
+	    	adulte = true;
+	    }
+        
+	    //On créer un objet
+	    Object[] document = new Object[4];
 	    document[0] = titre;
 	    document[1] = auteur;
 	    document[2] = codeBarre;
+	    document[3] = adulte;
 	    
 	     Mediatek pm = Mediatek.getInstance();
 	     
@@ -48,7 +68,6 @@ public class AjouterDocument extends HttpServlet {
 		} catch (NewDocException e) {
 			e.printStackTrace();
 		}
-		
 		
 		doGet(request, response);
 	}

@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Connexion</title>
+		<title>Mediatek</title>
 	</head>
 	<body>
 		<h1>Mediatek</h1>
@@ -24,6 +24,8 @@
             <input id='txtAuteur' name='txtAuteur' type='text' value='' autofocus /> <br/>
             <label for='txtTitre'>Titre :</label>
             <input id='txtTitre' name='txtTitre' type='text' value='' /> <br/>
+            <input type="checkbox" id="checkboxAdulte" name="checkboxAdulte">
+			<label for="scales">Adulte uniquement (Film seulement)</label>
             <br/>
             <button name='btnConnect' type='submit'>Ajouter</button>
         </form> 

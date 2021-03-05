@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import services.utils.Vérification;
+
 /**
  * @version 1.0 - 28/02/2021
  * @author Sébastien CUVELLIER / Manil RICHARD
@@ -21,20 +23,13 @@ public class Accueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//On récupère la session
-		HttpSession session = request.getSession( true );
 		
-		//On récupère la variable de session estConnecté si elle existe
-		Boolean estConnecté = null;
-		estConnecté = (Boolean) session.getAttribute("estConnecté");
-		
-		if(estConnecté == null) {
-			//Si elle existe pas on redirige vers le login
-			response.sendRedirect("login");
-		}else {
-			//si elle existe on rend la page accueil
-			request.getRequestDispatcher( "/WEB-INF/Accueil.jsp" ).forward( request, response );
+		if (!Vérification.estConnecté(request, response)) { 
+			return;
 		}
+		
+		request.getRequestDispatcher( "/WEB-INF/Accueil.jsp" ).forward( request, response );
+		
 		
 	}
 

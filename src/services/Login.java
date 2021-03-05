@@ -38,7 +38,8 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//On récupère les paramètres de notre formulaire.
+		 
+		 //On récupère les paramètres de notre formulaire.
 		 String login = request.getParameter( "txtLogin" );
 	     String password = request.getParameter( "txtPassword" );
 	     
@@ -56,7 +57,6 @@ public class Login extends HttpServlet {
 	    	 //Si l'utilisateur est =! null, on le redirige vers la page d'accueil
 	     }else {
 	    	 //On défini plusiers attributs
-	    	 session.setAttribute( "login", login );
 	    	 session.setAttribute( "prénom", u.data()[0] );
 	    	 session.setAttribute( "estConnecté", true );
 	    	 //On redirige vers l'accueil du site
