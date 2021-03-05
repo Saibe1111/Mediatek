@@ -12,16 +12,42 @@ public class Livre implements Document {
 	private String titre;
 	private String auteur;
 	private String codebarre;
+	private Boolean emprunt;
 	
 	/*
-	 * Constructeur du livre.
+	 * Constructeur du Livre pour emprunt Boolean
 	 * 
-	 * @param titre, titre du livre.
-	 * @param auteur, auteur du livre.
+	 * @param titre, titre du Livre.
+	 * @param auteur, auteur du Livre.
+	 * @param emprunt, le Livre est-il emprunté 
 	 */
-	public Livre(String titre, String auteur) {
+
+
+	public Livre(String titre, String auteur, String code_barre, Boolean emprunt) {
 		this.titre = titre;
 		this.auteur = auteur;
+		this.codebarre = code_barre;
+		this.emprunt = emprunt;
+	}
+	
+	/*
+	 * Constructeur du Livre pour emprunt Integer
+	 * 
+	 * @param titre, titre du Livre.
+	 * @param auteur, auteur du Livre.
+	 * @param emprunt, le Livre est-il emprunté. Integer traduit en boolean
+	 */
+	public Livre(String titre, String auteur, String code_barre, Integer emprunt) {
+		this.titre = titre;
+		this.auteur = auteur;
+		this.codebarre = code_barre;
+		if (emprunt == 1) {
+			this.emprunt = true;
+		}
+		else{
+			this.emprunt = false;
+		}
+
 	}
 
 
@@ -36,6 +62,7 @@ public class Livre implements Document {
 		o[0] = titre;
 		o[1] = auteur;
 		o[2] = codebarre;
+		o[3] = emprunt;
 		return o;
 	}
 	
