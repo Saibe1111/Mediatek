@@ -39,7 +39,6 @@ public class AjouterDocument extends HttpServlet {
 	    document[1] = auteur;
 	    document[2] = codeBarre;
 	    
-	    
 	     Mediatek pm = Mediatek.getInstance();
 	     
 	     try {

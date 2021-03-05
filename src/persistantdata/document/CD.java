@@ -20,9 +20,10 @@ public class CD implements Document{
 	 * @param titre, titre du CD.
 	 * @param auteur, auteur du CD.
 	 */
-	public CD(String titre, String auteur) {
+	public CD(String titre, String auteur, String code_barre) {
 		this.titre = titre;
 		this.auteur = auteur;
+		this.codebarre = code_barre;
 	}
 
 

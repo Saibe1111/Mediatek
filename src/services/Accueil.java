@@ -36,7 +36,6 @@ public class Accueil extends HttpServlet {
 			request.getRequestDispatcher( "/WEB-INF/Accueil.jsp" ).forward( request, response );
 		}
 		
-		
 	}
 
 	/**
@@ -55,7 +54,6 @@ public class Accueil extends HttpServlet {
         	//Si on a pas cliqué on rentourne vers un simple http get
         	doGet(request,response);
         }
-		
 		
 	}
 
