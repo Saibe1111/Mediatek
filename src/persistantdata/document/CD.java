@@ -22,11 +22,8 @@ public class CD implements Document{
 	 * @param auteur, auteur du CD.
 	 * @param emprunt, le CD est-il emprunté 
 	 */
-<<<<<<< Updated upstream
-	public CD(String titre, String auteur) {
-		this.titre = titre;
-		this.auteur = auteur;
-=======
+
+
 	public CD(String titre, String auteur, String code_barre, Boolean emprunt) {
 		this.titre = titre;
 		this.auteur = auteur;
@@ -52,8 +49,6 @@ public class CD implements Document{
 			this.emprunt = false;
 		}
 
-		
->>>>>>> Stashed changes
 	}
 
 
