@@ -206,11 +206,19 @@ public class MediatekData implements PersistentMediatek {
             //Liens vers la base de donnée
 			
 			//Sauvegarde de nos chemins:
+<<<<<<< Updated upstream
 			//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
 			//Manil: 
 			
             String url = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
             // Créaction de la connexion avec la base de données
+=======
+			//SÃ©bastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
+			//Manil: jdbc:sqlite:C:\Users\manil\Documents\GitHub\Mediatek\Database\db.db
+			
+            String url = "jdbc:sqlite:C:\\Users\\manil\\Documents\\GitHub\\Mediatek\\Database\\db.db";
+            // CrÃ©action de la connexion avec la base de donnÃ©es
+>>>>>>> Stashed changes
             conn = DriverManager.getConnection(url);
 
             System.out.println("La connexion avec la base de données est un succès");

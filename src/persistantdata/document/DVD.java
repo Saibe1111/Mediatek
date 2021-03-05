@@ -12,7 +12,8 @@ public class DVD implements Document {
 	private String titre;
 	private String auteur;
 	private String codebarre;
-	
+	private Boolean adulte;
+	private Boolean emprunt;
 	
 	/*
 	 * Constructeur du DVD.
@@ -20,9 +21,18 @@ public class DVD implements Document {
 	 * @param titre, titre du DVD.
 	 * @param auteur, auteur du DVD.
 	 */
+<<<<<<< Updated upstream
 	public DVD(String titre, String auteur) {
 		this.titre = titre;
 		this.auteur = auteur;
+=======
+	public DVD(String titre, String auteur, String code_barre, Boolean adulte, Boolean emprunt) {
+		this.titre = titre;
+		this.auteur = auteur;
+		this.codebarre = code_barre;
+		
+		this.emprunt = emprunt;
+>>>>>>> Stashed changes
 	}
 
 
