@@ -19,10 +19,9 @@ public class Livre implements Document {
 	 * @param titre, titre du livre.
 	 * @param auteur, auteur du livre.
 	 */
-	public Livre(String titre, String auteur, String code_barre) {
+	public Livre(String titre, String auteur) {
 		this.titre = titre;
 		this.auteur = auteur;
-		this.codebarre = code_barre;
 	}
 
 

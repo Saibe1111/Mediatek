@@ -20,10 +20,9 @@ public class DVD implements Document {
 	 * @param titre, titre du DVD.
 	 * @param auteur, auteur du DVD.
 	 */
-	public DVD(String titre, String auteur, String code_barre) {
+	public DVD(String titre, String auteur) {
 		this.titre = titre;
 		this.auteur = auteur;
-		this.codebarre = code_barre;
 	}
 
 

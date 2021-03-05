@@ -4,19 +4,22 @@ import java.sql.*;
 import java.util.List;
 
 import mediatek2021.*;
-import persistantdata.utilisateur.BibliothÃ©caire;
+import persistantdata.document.CD;
+import persistantdata.document.DVD;
+import persistantdata.document.Livre;
+import persistantdata.utilisateur.Bibliothécaire;
 
 
 /**
  * @version 1.1 - 19/02/2021
- * @author Jean-FranÃ§ois Brette / Manil RICHARD / SÃ©bastien CUVELLIER
- * MediatekData rÃ©cupÃ¨re les information de la base de donnÃ©e.
- * Classe mono-instance : l'unique instance est connue de la bibliotheque via une injection de dÃ©pendance dans son bloc static
+ * @author Jean-François Brette / Manil RICHARD / Sébastien CUVELLIER
+ * MediatekData récupère les information de la base de donnée.
+ * Classe mono-instance : l'unique instance est connue de la bibliotheque via une injection de dépendance dans son bloc static
  */
 public class MediatekData implements PersistentMediatek {
 	
 	/**
-	 * Injection dynamique de la dÃ©pendance dans le package stable mediatek2021.
+	 * Injection dynamique de la dépendance dans le package stable mediatek2021.
 	 */
 	static {
 		Mediatek.getInstance().setData(new MediatekData());
@@ -30,71 +33,118 @@ public class MediatekData implements PersistentMediatek {
 
 	
 	/**
-	 * Permet de rÃ©cuperer une liste de document en provenance de la base de donnÃ©e
+	 * Permet de récuperer une liste de document en provenance de la base de donnée
 	 * @param type - Le type de document que l'on veux.
-	 * @return retourne la liste de tous les documents de la bibliothÃ¨que
+	 * @return retourne la liste de tous les documents de la bibliothèque
 	 */
 	@Override
 	public List<Document> catalogue(int type) {
+		
+		
+		
+		
 		return null;
 	}
 
 
 	/**
-	 * Permet de rÃ©cuper un utilisateur en provenance de la base de donnÃ©e
+	 * Permet de récuper un utilisateur en provenance de la base de donnée
 	 * @param login - Login de l'utilisateur
 	 * @param password - Mot de passe de l'utilisateur
-	 * @return retourne l'utilisateur, si pas trouvÃ©, renvoie null
+	 * @return retourne l'utilisateur, si pas trouvé, renvoie null
 	 */
 	@Override
 	public Utilisateur getUser(String login, String password) {
-		//Connexion Ã  la base de donnÃ©es
+		//Connexion Ã  la base de données
 		Connection conn = getConnection();
-		//On prÃ©pare la requÃªte
+		//On prépare la requÃªte
         String sql = "SELECT * FROM Utilisateur WHERE Login=? AND Password=?";
         
         try {
-        	//On prÃ©pare la requÃªte
+        	//On prépare la requÃªte
         	PreparedStatement query = conn.prepareStatement(sql);
-        	//On remplit la requÃªte prÃ©parÃ©
+        	//On remplit la requÃªte préparé
         	query.setString(1, login);
         	query.setString(2, password);
-        	//On exÃ©cute la requÃªte prÃ©parÃ©
+        	//On exécute la requÃªte préparé
             ResultSet rs    = query.executeQuery();
             
-            //Si on a un rÃ©sutat
+            //Si on a un résutat
             if(rs.next()) {
-            	//On rÃ©cupÃ¨re le prÃ©nom
-            	String prÃ©nom = rs.getString("PrÃ©nom");
-            	//On crÃ©er et retourn un Utilisateur bibliothÃ©caire
-            	Utilisateur bibliothÃ©caire = new BibliothÃ©caire(login,password,prÃ©nom);
-        		return bibliothÃ©caire;
+            	//On récupère le prénom
+            	String prénom = rs.getString("Prénom");
+            	//On créer et retourn un Utilisateur bibliothécaire
+            	Utilisateur bibliothécaire = new Bibliothécaire(login,password,prénom);
+        		return bibliothécaire;
             }
 			
 		} catch (SQLException e) {
             System.out.println(e.getMessage());
 		}
-		//Si on a pas trouvÃ© on retourn null
+		//Si on a pas trouvé on retourn null
 		return null;
 	}
 
 	/**
-	 * Permet de rÃ©cuperer un document en particulier en provenance de la base de donnÃ©e
-	 * @param numDocument - NumÃ©ro du document que nous cherchons.
-	 * @return retourne le document, si pas trouvÃ©, renvoie null
+	 * Permet de récuperer un document en particulier en provenance de la base de donnée
+	 * @param numDocument - Numéro du document que nous cherchons.
+	 * @return retourne le document, si pas trouvé, renvoie null
 	 */
 	@Override
 	public Document getDocument(int numDocument) {
+		
+		//Connexion Ã  la base de données
+		Connection conn = getConnection();
+		//On prépare la requÃªte
+		String sql = "SELECT * FROM Document WHERE code_barre=?";
+		
+		try {
+			//On prépare la requÃªte
+		    PreparedStatement query = conn.prepareStatement(sql);
+		    //On remplit la requÃªte préparé
+		    query.setInt(1, numDocument);
+		    //On exécute la requÃªte préparé
+		    ResultSet rs = query.executeQuery();
+		    
+		    //Si on a un résutat
+		    if(rs.next()) {
+			    //On récupère le prénom
+			    String titre = rs.getString("titre");
+			    String auteur = rs.getString("auteur");
+			    String type_document = rs.getString("type_document");
+			    String code_barre = rs.getString("code_barre");
+			    
+			    switch (Integer.parseInt(type_document)) {
+				case 1:
+					Document livre = new Livre(titre, auteur, code_barre);
+					return livre;
+				case 2:
+					Document cd = new CD(titre, auteur, code_barre);
+					return cd;
+				case 3:
+					Document dvd = new DVD(titre, auteur, code_barre);
+					return dvd;
+				default:
+					return null;
+				}
+			    
+		    }
+		    
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		//Si on a pas trouvé on retourn null
 		return null;
+		
 	}
 
-	// ajoute un nouveau document - exception Ã  dÃ©finir
+	// ajoute un nouveau document - exception à définir
 	
 	/**
-	 * Permet de rajouter un document Ã  la base de donnÃ©e.
+	 * Permet de rajouter un document Ã  la base de donnée.
 	 * @param type - Permet de savoir le type du document. 1-> Livre 2-> DVD 3-> CD
 	 * @param args - Contient les informations sur le document
-	 * @throws NewDocException - Ã€ dÃ©finir <------
+	 * @throws NewDocException - à définir <------
 	 */
 	@Override
 	public void newDocument(int type, Object... args) throws NewDocException {
@@ -103,9 +153,9 @@ public class MediatekData implements PersistentMediatek {
 	    String titre = (String) args[2];
 	    String auteur = (String) args[2];
 		
-		//Connexion Ã  la base de donnÃ©es
+		//Connexion Ã  la base de données
 		Connection conn = getConnection();
-		//On prÃ©pare la requÃªte
+		//On prépare la requÃªte
 		String sql = "INSERT INTO Document (type_document, auteur, titre, code_barre) VALUES (?,?,?,?)";
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -127,9 +177,9 @@ public class MediatekData implements PersistentMediatek {
 	}
 
 	/**
-	 * Permet de supprimer un document de la base de donnÃ©e.
-	 * @param numDoc - NumÃ©ro du document que nous cherchons Ã  supprimer.
-	 * @throws SuppressException - Ã€ dÃ©finir <------
+	 * Permet de supprimer un document de la base de donnée.
+	 * @param numDoc - Numéro du document que nous cherchons à  supprimer.
+	 * @throws SuppressException - à définir <------
 	 */
 	@Override
 	public void suppressDoc(int numDoc) throws SuppressException {
@@ -137,9 +187,9 @@ public class MediatekData implements PersistentMediatek {
 	}
 	
 	/**
-	 * Permet d'obtenir une connection avec la base de donnÃ©e
-	 * @param numDoc - NumÃ©ro du document que nous cherchons Ã  supprimer.
-	 * @throws SuppressException - Ã€ dÃ©finir <------
+	 * Permet d'obtenir une connection avec la base de donnée
+	 * @param numDoc - Numéro du document que nous cherchons Ã  supprimer.
+	 * @throws SuppressException - à définir <------
 	 */
 	private Connection getConnection() {
 		
@@ -150,21 +200,20 @@ public class MediatekData implements PersistentMediatek {
 			e1.printStackTrace();
 		}
 
-		
 		Connection conn = null;
 		
 		try {
-            //Liens vers la base de donnÃ©e
+            //Liens vers la base de donnée
 			
 			//Sauvegarde de nos chemins:
-			//SÃ©bastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
+			//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
 			//Manil: 
 			
             String url = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
-            // CrÃ©action de la connexion avec la base de donnÃ©es
+            // Créaction de la connexion avec la base de données
             conn = DriverManager.getConnection(url);
 
-            System.out.println("La connexion avec la base de donnÃ©es est un succÃ¨s");
+            System.out.println("La connexion avec la base de données est un succès");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
