@@ -93,47 +93,6 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public Document getDocument(int numDocument) {
 		
-		//Connexion à la base de donn�es
-		Connection conn = getConnection();
-		//On pr�pare la requête
-		String sql = "SELECT * FROM Document WHERE code_barre=?";
-		
-		try {
-			//On pr�pare la requête
-		    PreparedStatement query = conn.prepareStatement(sql);
-		    //On remplit la requête pr�par�
-		    query.setInt(1, numDocument);
-		    //On ex�cute la requête pr�par�
-		    ResultSet rs = query.executeQuery();
-		    
-		    //Si on a un r�sutat
-		    if(rs.next()) {
-			    //On r�cup�re le prénom
-			    String titre = rs.getString("titre");
-			    String auteur = rs.getString("auteur");
-			    String type_document = rs.getString("type_document");
-			    String code_barre = rs.getString("code_barre");
-			    
-			    switch (Integer.parseInt(type_document)) {
-				case 1:
-					Document livre = new Livre(titre, auteur, code_barre);
-					return livre;
-				case 2:
-					Document cd = new CD(titre, auteur, code_barre);
-					return cd;
-				case 3:
-					Document dvd = new DVD(titre, auteur, code_barre);
-					return dvd;
-				default:
-					return null;
-				}
-			    
-		    }
-		    
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		//Si on a pas trouv� on retourn null
 		return null;
 		
 	}
