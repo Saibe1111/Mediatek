@@ -33,7 +33,13 @@ public class Accueil extends HttpServlet {
 			return;
 		}
 		
-		int type = Integer.parseInt(request.getParameter( "doc-select" ) );
+		int type = 0;
+		
+		try {
+			type = Integer.parseInt(request.getParameter( "doc-select" ));
+		} catch (NumberFormatException e) {
+		}
+		
 		List<Document> list = new ArrayList<Document>(); 
 		Mediatek pm = Mediatek.getInstance();
 		
