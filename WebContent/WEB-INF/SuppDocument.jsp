@@ -1,22 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Mediatek</title>
-		<link rel="icon" href="favicon.ico" />
-		<link href="styles/default.css" rel="stylesheet" type="text/css">
-	</head>
+
+<%@ include file="Header.jsp" %> 
+
 	<body>
-		<h1>Mediatek</h1>
-		<h3>Supprimer un document</h3>
-		<form method="post" action="ajouter-document">
+		<h3  class="item-title">Supprimer un document</h3>
+		<form class="item" method="post" action="ajouter-document">
 			<label for='txtCodeBarre'>Code Barre :</label>
             <input id='txtCodeBarre' name='txtCodeBarre' type='text' value='' autofocus /> <br/>
             
-            <button name='btnConnect' type='submit'>Supprimer</button>
+            <button class="item-task" name='btnConnect' type='submit'>Supprimer</button>
         </form> 
 		
 	</body>
+	<%@ include file="Footer.jsp" %> 
 </html>

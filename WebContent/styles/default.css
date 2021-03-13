@@ -1,3 +1,114 @@
 body {
     background-color: lightblue;
-  }
+  }	
+
+/* Navbar */
+.topnav {
+  background-color: rgb(255, 255, 255);
+  overflow: hidden;
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.left {
+  padding: 100px 100px;
+}
+
+.topnav a:hover {
+  background-color:#1f82af;
+  color: rgb(255, 255, 255);
+}
+
+.topnav a.active {
+  background-color: #28afee;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+/*item*/
+
+.item-title {
+	margin-left: 5%;
+    margin-right: 5%;
+    padding:  20px 300px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: white;
+    background-color: #28afee;
+    font-size: 30px;
+}
+
+.item {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding:  20px 300px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.item-task {
+    text-decoration: none;
+    border-radius:32px;
+    width:100px;
+    text-align:left;
+    padding:8px 16px;
+    display:inline-block;
+    background-color: red;
+    text-align: center;
+    color: black;
+}
+
+/*tableau*/
+
+
+td {
+    border: 1px solid #333;
+}
+
+.type{
+	width: 150px;
+	text-align: center;
+}
+
+.titre{
+	width: 800px;
+	text-align: center;
+}
+
+.code-barre{
+	width: 400px;
+	text-align: center;
+}
+
+.auteur{
+	width: 400px;
+	text-align: center;
+}
+
+thead,tfoot {
+    background-color: #333;
+    color: #fff;
+}
+
+.centrer {
+	text-align: center;
+	padding-left: 10%;
+}

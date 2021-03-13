@@ -1,18 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Mediatek</title>
-		<link rel="icon" href="favicon.ico" />
-		<link href="styles/default.css" rel="stylesheet" type="text/css">
-	</head>
+
+<%@ include file="Header.jsp" %> 
 	<body>
-		<h1>Mediatek</h1>
-		<h3>Ajouter un document</h3>
-		<form method="post" action="ajouter-document">
-		
+		<h3  class="item-title">Ajouter un document</h3>
+		<form class="item" method="post" action="ajouter-document">
 			<label for="doc-select">Choisir  un type de document:</label>
 			<select name="doc-select" id="doc-select">
 			    <option value="">--Choisir  un type de document--</option>
@@ -29,8 +21,9 @@
             <input type="checkbox" id="checkboxAdulte" name="checkboxAdulte">
 			<label for="scales">Adulte uniquement (Film seulement)</label>
             <br/>
-            <button name='btnConnect' type='submit'>Ajouter</button>
+            <button class="item-task" name='btnConnect' type='submit'>Ajouter</button>
         </form> 
 		
 	</body>
+	<%@ include file="Footer.jsp" %> 
 </html>
