@@ -41,10 +41,18 @@ public class DVD implements Document {
 	 * @param adulte, si le DVD est réservé au adulte.
 	 * @param emprunt, le DVD est-il emprunté. Integer traduit en boolean
 	 */
-	public DVD(String titre, String auteur, String code_barre, Boolean adulte, Integer emprunt) {
+	public DVD(String titre, String auteur, String code_barre, Integer adulte, Integer emprunt) {
 		this.titre = titre;
 		this.auteur = auteur;
 		this.codebarre = code_barre;
+		
+		if (adulte == 1) {
+			this.adulte = true;
+		}
+		else{
+			this.adulte = false;
+		}
+		
 		if (emprunt == 1) {
 			this.emprunt = true;
 		}
