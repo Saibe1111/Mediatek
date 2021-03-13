@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mediatek2021.Mediatek;
+import mediatek2021.SuppressException;
 import services.utils.Vérification;
 
 /**
@@ -34,6 +36,18 @@ public class SupprimerDocument extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String codeBarre = request.getParameter( "txtCodeBarre" );
+		
+		Mediatek pm = Mediatek.getInstance();
+		
+		try {
+			pm.suppressDoc(Integer.parseInt(codeBarre));
+		} catch (SuppressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		doGet(request, response);
 	}
