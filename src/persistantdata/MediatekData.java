@@ -47,24 +47,81 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public List<Document> catalogue(int type) {
 		
+		//Connexion à la base de donn�es
+		Connection conn = getConnection();
+		
 		List<Document> documents = new ArrayList<Document>(); 
 		
-		if(type == 1) {
+		String sql = "";
+		
+		switch (type) {
+		case 1:
 			
-			documents.add(new Livre("Titre livre", "Auteur livre", "Code barre livre", 0) );
+			//Pour les livres
+			sql = "SELECT * FROM Livre";
 			
-		}else if (type == 2){
+			try {
+	        	//On pr�pare la requête
+	        	PreparedStatement query = conn.prepareStatement(sql);
+	        	//On ex�cute la requête pr�par�
+	            ResultSet rs = query.executeQuery();
+	            
+	            while(rs.next())
+	            {
+	            	documents.add(new Livre(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"), rs.getInt("emprunt")));
+	            }
+	            
+	            return documents;
+				
+			} catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            return null;
+			}
+		case 2:
+			sql = "SELECT * FROM CD";
 			
-			documents.add(new CD("Titre CD", "Auteur CD", "Code barre CD", 0) );
+			try {
+	        	//On pr�pare la requête
+	        	PreparedStatement query = conn.prepareStatement(sql);
+	        	//On ex�cute la requête pr�par�
+	            ResultSet rs = query.executeQuery();
+	            
+	            while(rs.next())
+	            {
+	            	documents.add(new CD(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"), rs.getInt("emprunt")));
+	            }
+	            
+	            return documents;
+				
+			} catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            return null;
+			}
 			
-		}else if (type == 3){
+		case 3:
+			sql = "SELECT * FROM DVD";	
+
+			try {
+	        	//On pr�pare la requête
+	        	PreparedStatement query = conn.prepareStatement(sql);
+	        	//On ex�cute la requête pr�par�
+	            ResultSet rs = query.executeQuery();
+	            
+	            while(rs.next())
+	            {
+	            	documents.add(new DVD(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"), rs.getInt("adulte"),rs.getInt("emprunt")));
+	            }
+	            
+	            return documents;
+				
+			} catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            return null;
+			}
 			
-			documents.add(new DVD("Titre DVD", "Auteur DVD", "Code barre DVD", false, 0 ) );
-			
+		default:
+			return null;
 		}
-		
-		
-		return documents;
 	}
 
 
