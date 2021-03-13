@@ -15,10 +15,12 @@ public class Vérification {
 		HttpSession session = request.getSession( true );
 				
 		//On récupère la variable de session estConnecté si elle existe
-		Boolean estConnecté = null;
-		estConnecté = (Boolean) session.getAttribute("estConnecté");
-				
-		if(estConnecté == true) {
+		Boolean estConnecte = null;
+		estConnecte = (Boolean) session.getAttribute("estConnecté");
+		
+		//System.out.println("Variable estConnecte: " + estConnecte);
+		
+		if(estConnecte != null) {
 			return true;
 		}else {
 			//Si elle existe pas on redirige vers le login
