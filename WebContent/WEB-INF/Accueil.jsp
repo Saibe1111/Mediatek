@@ -7,6 +7,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Accueil</title>
+		<link rel="icon" href="favicon.ico" />
+		<link href="styles/default.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<h1>Bonjour, ${prénom}</h1>

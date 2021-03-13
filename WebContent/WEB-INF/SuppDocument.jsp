@@ -5,6 +5,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Mediatek</title>
+		<link rel="icon" href="favicon.ico" />
+		<link href="styles/default.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<h1>Mediatek</h1>

@@ -5,6 +5,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Connexion</title>
+		<link rel="icon" href="favicon.ico" />
+		<link href="styles/default.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<h1>Connexion à Mediatek</h1>
