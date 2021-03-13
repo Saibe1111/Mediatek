@@ -61,13 +61,14 @@ public class AjouterDocument extends HttpServlet {
 	    
 	     Mediatek pm = Mediatek.getInstance();
 	     
-	     try {
-			pm.newDocument(Integer.parseInt(type), document);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (NewDocException e) {
-			e.printStackTrace();
-		}
+	     if(type != "") {
+		     try {
+				pm.newDocument(Integer.parseInt(type), document);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+	     }
+	     
 		
 		doGet(request, response);
 	}
