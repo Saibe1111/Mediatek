@@ -1,9 +1,13 @@
 package persistantdata;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import mediatek2021.*;
+import persistantdata.document.CD;
+import persistantdata.document.DVD;
+import persistantdata.document.Livre;
 import persistantdata.utilisateur.Bibliothécaire;
 
 
@@ -43,10 +47,24 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public List<Document> catalogue(int type) {
 		
+		List<Document> documents = new ArrayList<Document>(); 
+		
+		if(type == 1) {
+			
+			documents.add(new Livre("Titre livre", "Auteur livre", "Code barre livre", 0) );
+			
+		}else if (type == 2){
+			
+			documents.add(new CD("Titre CD", "Auteur CD", "Code barre CD", 0) );
+			
+		}else if (type == 3){
+			
+			documents.add(new DVD("Titre DVD", "Auteur DVD", "Code barre DVD", false, 0 ) );
+			
+		}
 		
 		
-		
-		return null;
+		return documents;
 	}
 
 
