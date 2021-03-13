@@ -33,6 +33,16 @@ public class Accueil extends HttpServlet {
 			return;
 		}
 		
+		HttpSession session = request.getSession( true );
+		
+		if (request.getParameter("disconnect") != null) {
+			//On détruit la session
+			session.invalidate();
+			//On renvoie vers le login
+			response.sendRedirect("login");
+			return;
+        }
+		
 		int type = 0;
 		
 		try {
@@ -62,21 +72,6 @@ public class Accueil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if (!Vérification.estConnecté(request, response)) {
-			return;
-		}
-		
-		HttpSession session = request.getSession( true );
-		
-		if (request.getParameter("btnDisconnect") != null) {
-			//On détruit la session
-			session.invalidate();
-			//On renvoie vers le login
-			response.sendRedirect("login");
-			return;
-        }
-		
         //Si on a pas cliqué on rentourne vers un simple http get
         doGet(request,response);
         
