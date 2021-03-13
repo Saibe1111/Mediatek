@@ -20,14 +20,38 @@ public class DVD implements Document {
 	 * 
 	 * @param titre, titre du DVD.
 	 * @param auteur, auteur du DVD.
+	 * @param code_barre, code barre du DVD, c'est une clé unique.
+	 * @param adulte, si le DVD est réservé au adulte.
+	 * @param emprunt, le DVD est-il emprunté.
 	 */
 
 	public DVD(String titre, String auteur, String code_barre, Boolean adulte, Boolean emprunt) {
 		this.titre = titre;
 		this.auteur = auteur;
 		this.codebarre = code_barre;
-		
 		this.emprunt = emprunt;
+		
+	}
+	/*
+	 * Constructeur du DVD.
+	 * 
+	 * @param titre, titre du DVD.
+	 * @param auteur, auteur du DVD.
+	 * @param code_barre, code barre du DVD, c'est une clé unique.
+	 * @param adulte, si le DVD est réservé au adulte.
+	 * @param emprunt, le DVD est-il emprunté. Integer traduit en boolean
+	 */
+	public DVD(String titre, String auteur, String code_barre, Boolean adulte, Integer emprunt) {
+		this.titre = titre;
+		this.auteur = auteur;
+		this.codebarre = code_barre;
+		if (emprunt == 1) {
+			this.emprunt = true;
+		}
+		else{
+			this.emprunt = false;
+		}
+		
 	}
 
 
@@ -38,10 +62,13 @@ public class DVD implements Document {
 	 */
 	@Override
 	public Object[] data() {
-		Object[] o = new Object[3];
-		o[0] = titre;
-		o[1] = auteur;
-		o[2] = codebarre;
+		Object[] o = new Object[6];
+		o[0] = "DVD";
+		o[1] = titre;
+		o[2] = auteur;
+		o[3] = codebarre;
+		o[4] = emprunt;
+		o[5] = adulte;
 		return o;
 	}
 	

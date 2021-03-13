@@ -20,7 +20,8 @@ public class CD implements Document{
 	 * 
 	 * @param titre, titre du CD.
 	 * @param auteur, auteur du CD.
-	 * @param emprunt, le CD est-il emprunté 
+	 * @param code_barre, code barre du CD, c'est une clé unique.
+	 * @param emprunt, le CD est-il emprunté.
 	 */
 
 
@@ -36,6 +37,7 @@ public class CD implements Document{
 	 * 
 	 * @param titre, titre du CD.
 	 * @param auteur, auteur du CD.
+	 * @param code_barre, code barre du CD, c'est une clé unique.
 	 * @param emprunt, le CD est-il emprunté. Integer traduit en boolean
 	 */
 	public CD(String titre, String auteur, String code_barre, Integer emprunt) {
@@ -59,11 +61,12 @@ public class CD implements Document{
 	 */
 	@Override
 	public Object[] data() {
-		Object[] o = new Object[4];
-		o[0] = titre;
-		o[1] = auteur;
-		o[2] = codebarre;
-		o[3] = emprunt;
+		Object[] o = new Object[5];
+		o[0] = "CD";
+		o[1] = titre;
+		o[2] = auteur;
+		o[3] = codebarre;
+		o[4] = emprunt;
 		return o;
 	}
 	

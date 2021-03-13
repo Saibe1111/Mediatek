@@ -17,9 +17,10 @@ public class Livre implements Document {
 	/*
 	 * Constructeur du Livre pour emprunt Boolean
 	 * 
-	 * @param titre, titre du Livre.
-	 * @param auteur, auteur du Livre.
-	 * @param emprunt, le Livre est-il emprunté 
+	 * @param titre, titre du livre.
+	 * @param auteur, auteur du livre.
+	 * @param emprunt, le livre est-il emprunté 
+	 * @param code_barre, code barre du livre, c'est une clé unique.
 	 */
 
 
@@ -33,9 +34,10 @@ public class Livre implements Document {
 	/*
 	 * Constructeur du Livre pour emprunt Integer
 	 * 
-	 * @param titre, titre du Livre.
-	 * @param auteur, auteur du Livre.
-	 * @param emprunt, le Livre est-il emprunté. Integer traduit en boolean
+	 * @param titre, titre du livre.
+	 * @param auteur, auteur du livre.
+	 * @param code_barre, code barre du livre, c'est une clé unique.
+	 * @param emprunt, le livre est-il emprunté. Integer traduit en boolean
 	 */
 	public Livre(String titre, String auteur, String code_barre, Integer emprunt) {
 		this.titre = titre;
@@ -58,11 +60,12 @@ public class Livre implements Document {
 	 */
 	@Override
 	public Object[] data() {
-		Object[] o = new Object[3];
-		o[0] = titre;
-		o[1] = auteur;
-		o[2] = codebarre;
-		o[3] = emprunt;
+		Object[] o = new Object[5];
+		o[0] = "Livre";
+		o[1] = titre;
+		o[2] = auteur;
+		o[3] = codebarre;
+		o[4] = emprunt;
 		return o;
 	}
 	
