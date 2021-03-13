@@ -4,9 +4,6 @@ import java.sql.*;
 import java.util.List;
 
 import mediatek2021.*;
-import persistantdata.document.CD;
-import persistantdata.document.DVD;
-import persistantdata.document.Livre;
 import persistantdata.utilisateur.Bibliothécaire;
 
 
@@ -17,6 +14,12 @@ import persistantdata.utilisateur.Bibliothécaire;
  * Classe mono-instance : l'unique instance est connue de la bibliotheque via une injection de d�pendance dans son bloc static
  */
 public class MediatekData implements PersistentMediatek {
+	
+	//Sauvegarde de nos chemins:
+
+	//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db
+	//Manil: jdbc:sqlite:C:\Users\manil\Documents\GitHub\Mediatek\Database\db.db
+	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
 	
 	/**
 	 * Injection dynamique de la d�pendance dans le package stable mediatek2021.
@@ -164,16 +167,11 @@ public class MediatekData implements PersistentMediatek {
 		try {
             //Liens vers la base de donn�e
 			
-			//Sauvegarde de nos chemins:
-
-			//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Git/Mediatek/Database/db.db
-			//Manil: jdbc:sqlite:C:\Users\manil\Documents\GitHub\Mediatek\Database\db.db
 			
-            String url = "jdbc:sqlite:C:\\Users\\manil\\Documents\\GitHub\\Mediatek\\Database\\db.db";
             // Créaction de la connexion avec la base de données
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(DATABASE_CHEMIN);
 
-            System.out.println("La connexion avec la base de donn�es est un succ�s");
+            System.out.println("La connexion avec la base de données est un succès");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
