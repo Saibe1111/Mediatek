@@ -34,7 +34,7 @@
 				for (int j=0; j<list.size(); j++){ %>
 					<tr>
 						<td class="type"><%= list.get(j).data()[0] %></td>
-				    	<td class="code-barre"><a href="doccument?code-barre=<%= list.get(j).data()[3] %>"><%= list.get(j).data()[3] %></a></td>
+				    	<td class="code-barre"><a href="document?code-barre=<%= list.get(j).data()[3] %>"><%= list.get(j).data()[3] %></a></td>
 				    	<td class="titre"><%= list.get(j).data()[1] %></td>
 				    	<td class="auteur"><%= list.get(j).data()[2] %></td>
 				    </tr>
