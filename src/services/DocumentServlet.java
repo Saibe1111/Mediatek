@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import mediatek2021.Document;
 import mediatek2021.Mediatek;
 import mediatek2021.Utilisateur;
+import services.utils.Vérification;
 
 /**
  * @version 1.0 - 19/02/2021
@@ -29,13 +30,25 @@ public class DocumentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String codeBarre = request.getParameter( "code-barre" );
+		if (!Vérification.estConnecté(request, response)) {
+			return;
+		}
 		
-		//Mediatek pm = Mediatek.getInstance();
+		int codeBarre;
 		
-		//Document doc = (Document) pm.getDocument(Integer.parseInt(codeBarre));
+		try {
+			codeBarre = Integer.parseInt(request.getParameter( "code-barre" ));
+		} catch (NumberFormatException e) {
+			response.sendRedirect("accueil");
+			return;
+		}
 		
-		//request.setAttribute("Type", doc.data()[0]);
+		
+		Mediatek pm = Mediatek.getInstance();
+		
+		Document doc = (Document) pm.getDocument(codeBarre);
+		
+		request.setAttribute("Type", "test");
 		
 		//On lui renvoie la JSP
 		request.getRequestDispatcher( "/WEB-INF/Document.jsp" ).forward( request, response );
