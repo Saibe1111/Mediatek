@@ -14,7 +14,7 @@
 			    <option value="1">Livre</option>
 			    <option value="2">CD</option>
 			    <option value="3">DVD</option>
-			</select>
+			</select><br><br>
 			<input class="item-task" type="submit" name="btnDocType" value="Changer" />
 		</form>
 		<div class="item">

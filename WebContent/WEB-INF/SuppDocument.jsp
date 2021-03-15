@@ -6,8 +6,8 @@
 	<body>
 		<h3  class="item-title">Supprimer un document</h3>
 		<form class="item" method="post" action="ajouter-document">
-			<label for='txtCodeBarre'>Code Barre :</label>
-            <input id='txtCodeBarre' name='txtCodeBarre' type='text' value='' autofocus /> <br/>
+			<label for='txtCodeBarre'>Code Barre :</label><br>
+            <input id='txtCodeBarre' name='txtCodeBarre' type='text' value='' autofocus /> <br/><br>
             
             <button class="item-task" name='btnConnect' type='submit'>Supprimer</button>
         </form> 
