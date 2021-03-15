@@ -3,7 +3,7 @@ package persistantdata.document;
 import mediatek2021.Document;
 
 /**
- * @version 1.0 - 28/02/2021
+ * @version 1.1 - 15/03/2021
  * @author Manil RICHARD / Sébastien CUVELLIER
  * Class qui définit un DVD.
  */
@@ -46,19 +46,8 @@ public class DVD implements Document {
 		this.auteur = auteur;
 		this.codebarre = code_barre;
 		
-		if (adulte == 1) {
-			this.adulte = true;
-		}
-		else{
-			this.adulte = false;
-		}
-		
-		if (emprunt == 1) {
-			this.emprunt = true;
-		}
-		else{
-			this.emprunt = false;
-		}
+		this.adulte = (adulte == 1);
+		this.emprunt = (emprunt == 1);
 		
 	}
 

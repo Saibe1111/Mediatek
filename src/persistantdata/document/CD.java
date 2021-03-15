@@ -3,7 +3,7 @@ package persistantdata.document;
 import mediatek2021.Document;
 
 /**
- * @version 1.0 - 28/02/2021
+ * @version 1.1 - 15/03/2021
  * @author Manil RICHARD / Sébastien CUVELLIER
  * Class qui définit un CD.
  */
@@ -44,13 +44,8 @@ public class CD implements Document{
 		this.titre = titre;
 		this.auteur = auteur;
 		this.codebarre = code_barre;
-		if (emprunt == 1) {
-			this.emprunt = true;
-		}
-		else{
-			this.emprunt = false;
-		}
-
+		
+		this.emprunt = (emprunt == 1);
 	}
 
 
