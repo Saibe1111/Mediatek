@@ -61,7 +61,7 @@ public class Accueil extends HttpServlet {
 			list = pm.catalogue(type);
 		}
 		
-		request.setAttribute( "Document", list );
+		request.setAttribute( "Documents", list );
 		
 		request.getRequestDispatcher( "/WEB-INF/Accueil.jsp" ).forward( request, response );
 		

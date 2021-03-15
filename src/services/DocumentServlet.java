@@ -1,6 +1,8 @@
 package services;
 
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +50,20 @@ public class DocumentServlet extends HttpServlet {
 		
 		Document doc = (Document) pm.getDocument(codeBarre);
 		
-		request.setAttribute("Type", "test");
+		try {
+			request.setAttribute("type", doc.data()[0]);
+			request.setAttribute("titre", doc.data()[1]);
+			request.setAttribute("auteur", doc.data()[2]);
+			request.setAttribute("codeBarre", doc.data()[3]);
+			request.setAttribute("emprunt", doc.data()[4]);
+			if (doc.data().length>4)  {
+				request.setAttribute("adulte", doc.data()[5]);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		
 		//On lui renvoie la JSP
 		request.getRequestDispatcher( "/WEB-INF/Document.jsp" ).forward( request, response );

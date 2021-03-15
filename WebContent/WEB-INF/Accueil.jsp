@@ -30,7 +30,7 @@
 		    <tbody>
 		    
 				<% 
-				ArrayList<Document> list = (ArrayList<Document>) request.getAttribute("Document");
+				ArrayList<Document> list = (ArrayList<Document>) request.getAttribute("Documents");
 				for (int j=0; j<list.size(); j++){ %>
 					<tr>
 						<td class="type"><%= list.get(j).data()[0] %></td>
