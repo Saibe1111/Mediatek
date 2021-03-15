@@ -22,8 +22,8 @@ public class MediatekData implements PersistentMediatek {
 	//Sauvegarde de nos chemins:
 
 	//Sébastien: jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db
-	//Manil: jdbc:sqlite:C:\Users\manil\Documents\GitHub\Mediatek\Database\db.db
-	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
+	//Manil: jdbc:sqlite:C:\Users\manil\eclipseEE-workshop\ProjetMediatek\Database\db.db
+	private static String DATABASE_CHEMIN = "jdbc:sqlite:C:\\Users\\manil\\eclipseEE-workshop\\ProjetMediatek\\Database\\db.db";
 	
 	/**
 	 * Injection dynamique de la d�pendance dans le package stable mediatek2021.
@@ -170,6 +170,46 @@ public class MediatekData implements PersistentMediatek {
 	 */
 	@Override
 	public Document getDocument(int numDocument) {
+		Connection conn = getConnection();
+		String sql = "SELECT * FROM Livre WHERE codeBarre= ?";
+		Document doc;
+		try (PreparedStatement query = conn.prepareStatement(sql)) {
+			query.setInt(1, numDocument);
+			query.executeUpdate();
+			ResultSet rs = query.executeQuery();
+			if(rs.next()) {
+				doc = new Livre(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), 0 );
+				return doc;
+			}
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+		sql = "SELECT * FROM CD WHERE codeBarre= ?";
+		try (PreparedStatement query = conn.prepareStatement(sql)) {
+			query.setInt(1, numDocument);
+			query.executeUpdate();
+			ResultSet rs = query.executeQuery();
+			if(rs.next()) {
+				doc = new CD(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), 0 );
+				return doc;
+			}
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+		sql = "SELECT * FROM DVD WHERE codeBarre= ?";
+		try (PreparedStatement query = conn.prepareStatement(sql)) {
+			query.setInt(1, numDocument);
+			query.executeUpdate();
+			ResultSet rs = query.executeQuery();
+			if(rs.next()) {
+				doc = new DVD(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), rs.getInt("adulte"), 0 );
+				return doc;
+			}
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
 		
 		return null;
 		
@@ -186,24 +226,74 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public void newDocument(int type, Object... args) throws NewDocException {
 		
-	    String codeBarre = (String) args[2];
-	    String titre = (String) args[2];
-	    String auteur = (String) args[2];
+		for (Object object : args) {
+			System.out.println(object);
+		}
 		
+	    String titre = (String) args[1];
+	    String auteur = (String) args[2];
+	    String codeBarre = (String) args[3];
+	    boolean adulte = (boolean) args[4];
+		
+	    if(titre=="" || auteur =="" || codeBarre == "") {
+	    	throw new NewDocException("Il manque des champs");
+	    }
+	    
 		//Connexion à la base de donn�es
 		Connection conn = getConnection();
-		//On pr�pare la requête
-		String sql = "INSERT INTO Document (type_document, auteur, titre, code_barre) VALUES (?,?,?,?)";
+		//On pr�pare la requête		
+		String sql;
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, type);
-            pstmt.setString(2, auteur);
-            pstmt.setString(3, titre);
-            pstmt.setString(4, codeBarre);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+		
+		
+		switch (type) {
+			case 1:
+				sql = "INSERT INTO Livre (codeBarre, auteur, titre, emprunt) VALUES (?,?,?,?)";
+				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, codeBarre);
+	            pstmt.setString(2, auteur);
+	            pstmt.setString(3, titre);	         
+	            pstmt.setInt(4, 0);
+	            pstmt.executeUpdate();
+		        } catch (SQLException e) {
+		            System.out.println(e.getMessage());
+		        }
+				break;
+			
+			case 2:
+				sql = "INSERT INTO DVD (codeBarre, auteur, titre, emprunt, adulte) VALUES (?,?,?,?,?)";
+				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, codeBarre);
+		            pstmt.setString(2, auteur);
+		            pstmt.setString(3, titre);
+		            pstmt.setInt(4, 0);
+		            if (adulte){
+		            	pstmt.setInt(5, 1);
+		            }else {
+		            	pstmt.setInt(5, 0);
+		            }		          
+		            pstmt.executeUpdate();
+			        } catch (SQLException e) {
+			            System.out.println(e.getMessage());
+			        }
+				break;
+				
+			case 3:
+				sql = "INSERT INTO CD (codeBarre, auteur, titre, emprunt) VALUES (?,?,?,?)";
+				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, codeBarre);
+		            pstmt.setString(2, auteur);
+		            pstmt.setString(3, titre);
+		            pstmt.setInt(4, 0);
+		            pstmt.executeUpdate();
+			        } catch (SQLException e) {
+			            System.out.println(e.getMessage());
+			        }
+				break;
+		
+		}
+		
+		
 		
 		//throw new NewDocException("Type de document inconnu !");
 		
