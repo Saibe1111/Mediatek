@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mediatek2021.Mediatek;
-import mediatek2021.NewDocException;
 import services.utils.Vérification;
 
 /**
