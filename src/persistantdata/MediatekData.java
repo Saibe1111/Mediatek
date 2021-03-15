@@ -170,12 +170,12 @@ public class MediatekData implements PersistentMediatek {
 	 */
 	@Override
 	public Document getDocument(int numDocument) {
+		String codeBarre = String.valueOf(numDocument);
 		Connection conn = getConnection();
-		String sql = "SELECT * FROM Livre WHERE codeBarre= ?";
+		String sql = "SELECT * FROM Livre WHERE codeBarre=?";
 		Document doc;
 		try (PreparedStatement query = conn.prepareStatement(sql)) {
-			query.setInt(1, numDocument);
-			query.executeUpdate();
+			query.setString(1, codeBarre);
 			ResultSet rs = query.executeQuery();
 			if(rs.next()) {
 				doc = new Livre(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), 0 );
@@ -185,10 +185,9 @@ public class MediatekData implements PersistentMediatek {
 	            System.out.println(e.getMessage());
 	        }
 		
-		sql = "SELECT * FROM CD WHERE codeBarre= ?";
+		sql = "SELECT * FROM CD WHERE codeBarre=?";
 		try (PreparedStatement query = conn.prepareStatement(sql)) {
-			query.setInt(1, numDocument);
-			query.executeUpdate();
+			query.setString(1, codeBarre);
 			ResultSet rs = query.executeQuery();
 			if(rs.next()) {
 				doc = new CD(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), 0 );
@@ -198,10 +197,9 @@ public class MediatekData implements PersistentMediatek {
 	            System.out.println(e.getMessage());
 	        }
 		
-		sql = "SELECT * FROM DVD WHERE codeBarre= ?";
+		sql = "SELECT * FROM DVD WHERE codeBarre=?";
 		try (PreparedStatement query = conn.prepareStatement(sql)) {
-			query.setInt(1, numDocument);
-			query.executeUpdate();
+			query.setString(1, codeBarre);
 			ResultSet rs = query.executeQuery();
 			if(rs.next()) {
 				doc = new DVD(rs.getString("titre"),rs.getString("auteur"), rs.getString("codeBarre"), rs.getInt("adulte"), 0 );
@@ -311,6 +309,9 @@ public class MediatekData implements PersistentMediatek {
 	@Override
 	public void suppressDoc(int numDoc) throws SuppressException {
 		
+		Document doc = getDocument(numDoc);
+		Connection conn = getConnection();	
+		String sql;
 	}
 	
 	/**
