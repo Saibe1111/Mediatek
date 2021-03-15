@@ -53,11 +53,12 @@ public class AjouterDocument extends HttpServlet {
 	    }
         
 	    //On créer un objet
-	    Object[] document = new Object[4];
-	    document[0] = titre;
-	    document[1] = auteur;
-	    document[2] = codeBarre;
-	    document[3] = adulte;
+	    Object[] document = new Object[5];
+	    document[0] = type;
+	    document[1] = titre;
+	    document[2] = auteur;
+	    document[3] = codeBarre;
+	    document[4] = adulte;
 	    
 	     Mediatek pm = Mediatek.getInstance();
 	     
