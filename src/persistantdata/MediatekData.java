@@ -25,10 +25,10 @@ public class MediatekData implements PersistentMediatek {
 	// jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db
 	// Manil:
 	// jdbc:sqlite:C:\Users\manil\eclipseEE-workshop\ProjetMediatek\Database\db.db
-	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/";
+	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
 
 	/**
-	 * Injection dynamique de la dépendance dans le package stable mediatek2021.
+	 * Injection dynamique de la dépendance dans le package stabscle mediatek2021.
 	 */
 	static {
 		Mediatek.getInstance().setData(new MediatekData());
@@ -191,6 +191,7 @@ public class MediatekData implements PersistentMediatek {
 	 * @return retourne le document, si pas trouvé, renvoie null.
 	 */
 	private Document getDocument(int numDocument, int type) {
+		
 		// On transforme notre int en string
 		String codeBarre = String.valueOf(numDocument);
 		// Connexion à la base de données
