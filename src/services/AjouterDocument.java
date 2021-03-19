@@ -6,12 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mediatek2021.Mediatek;
+import mediatek2021.NewDocException;
 import services.utils.Vérification;
 
 /**
- * @version 1.0 - 19/02/2021
+ * @version 2.0 - 19/02/2021
  * @author Sébastien CUVELLIER / Manil RICHARD
  * Gestion de l'ajout de document
  */
@@ -47,30 +49,36 @@ public class AjouterDocument extends HttpServlet {
 	    String auteur = request.getParameter( "txtAuteur" );
 	    Boolean adulte = false;
 	    
-	    if (request.getParameter( "checkboxAdulte" ) == "on") {
-	    	adulte = true;
-	    }
-        
+	    String valueCheckbox = request.getParameter( "checkboxAdulte" );
+	    
+	    adulte = Boolean.valueOf(valueCheckbox);
+
 	    //On créer un objet
-	    Object[] document = new Object[5];
-	    document[0] = type;
-	    document[1] = titre;
-	    document[2] = auteur;
-	    document[3] = codeBarre;
-	    document[4] = adulte;
+	    Object[] document = new Object[4];
+	    document[0] = titre;
+	    document[1] = auteur;
+	    document[2] = codeBarre;
+	    document[3] = adulte;
 	    
 	     Mediatek pm = Mediatek.getInstance();
+	     
+	   //On créer un variable session si on n'arrive pas à en récupérer une.
+	     HttpSession session = request.getSession( true );
 	     
 	     if(type != "") {
 		     try {
 				pm.newDocument(Integer.parseInt(type), document);
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (NewDocException e) {
+				session.setAttribute("erreur",e.getMessage());
+				doGet(request, response);
+				return;
 			} 
 	     }
 	     
+	     session.setAttribute("succès","Le document à bien été ajouté");
+	     response.sendRedirect("accueil");
 		
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

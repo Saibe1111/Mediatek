@@ -14,6 +14,9 @@
 			<b>Titre: </b> <%= request.getAttribute( "titre" ) %><br><br>
 			<b>Auteur: </b> <%= request.getAttribute( "auteur" ) %><br><br>
 			<b>Status: </b> <%= request.getAttribute( "emprunt" ) %><br><br>
+			<% if( request.getAttribute( "type" ) == "DVD"){ %>
+				<b>Adulte: </b> <%= request.getAttribute( "adulte" ) %><br><br>
+			<% } %>
 		</div>
 		
 		

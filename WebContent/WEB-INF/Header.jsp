@@ -17,3 +17,13 @@
 					<a href="accueil?disconnect=1">Déconnexion</a>
             </div>
     </div>
+   <% if(session.getAttribute("succès") != null){%>
+	   <a class="success">${succès}</a>
+   <%session.setAttribute("succès",null);
+   }
+   %>
+   <% if(session.getAttribute("erreur") != null){%>
+	   <a class="error">${erreur}</a>
+   <% session.setAttribute("erreur",null);
+   }
+   %>

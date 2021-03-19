@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mediatek2021.Mediatek;
 import mediatek2021.SuppressException;
@@ -41,15 +42,26 @@ public class SupprimerDocument extends HttpServlet {
 		
 		Mediatek pm = Mediatek.getInstance();
 		
+		HttpSession session = request.getSession( true );
+		
 		try {
+			
+			if(codeBarre == "") {
+				pm.suppressDoc(0);
+			}
 			pm.suppressDoc(Integer.parseInt(codeBarre));
+			
 		} catch (SuppressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//On créer un variable session si on n'arrive pas à en récupérer une.
+			session.setAttribute("erreur",e.getMessage());
+			doGet(request, response);
+			return;
 		}
 		
+		session.setAttribute("succès","Le document à bien été supprimé");
+	    response.sendRedirect("accueil");
 		
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

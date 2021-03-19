@@ -25,7 +25,7 @@ public class MediatekData implements PersistentMediatek {
 	// jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db
 	// Manil:
 	// jdbc:sqlite:C:\Users\manil\eclipseEE-workshop\ProjetMediatek\Database\db.db
-	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/Database/db.db";
+	private static String DATABASE_CHEMIN = "jdbc:sqlite:/home/sebastien/Documents/Java/Mediatek-CUVELLIER-RICHARD/";
 
 	/**
 	 * Injection dynamique de la dépendance dans le package stable mediatek2021.
@@ -93,6 +93,11 @@ public class MediatekData implements PersistentMediatek {
 				}
 
 			}
+			
+			rs.close();
+			query.close();
+			conn.close();
+			
 			// On renvoie la liste des documents.
 			return documents;
 
@@ -132,6 +137,9 @@ public class MediatekData implements PersistentMediatek {
 				String prénom = rs.getString("prénom");
 				// On créer et retourn un Utilisateur Bibliothécaire
 				Utilisateur Bibliothécaire = new Bibliothécaire(login, password, prénom);
+				rs.close();
+				query.close();
+				conn.close();
 				return Bibliothécaire;
 			}
 
@@ -205,7 +213,7 @@ public class MediatekData implements PersistentMediatek {
 		}
 
 		// On initialise un document
-		Document document;
+		Document document = null;
 
 		try {
 			// On prépare la requête
@@ -218,18 +226,24 @@ public class MediatekData implements PersistentMediatek {
 				switch (type) {
 				case 1:
 					document = new Livre(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"), 0);
-					return document;
+					break;
 				case 2:
 					document = new CD(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"), 0);
-					return document;
+					break;
 				case 3:
 					document = new DVD(rs.getString("titre"), rs.getString("auteur"), rs.getString("codeBarre"),
 							rs.getInt("adulte"), 0);
-					return document;
+					break;
 				default:
 					return null;
 				}
 			}
+			
+			rs.close();
+			query.close();
+			conn.close();
+			
+			return document;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -250,7 +264,7 @@ public class MediatekData implements PersistentMediatek {
 	 *                         document
 	 */
 	@Override
-	public void newDocument(int type, Object... args) throws NewDocException {
+	public synchronized void newDocument(int type, Object... args) throws NewDocException {
 
 		// On vérifie qu'on est en présence d'un type valable
 		if (1 > type && type > 3) {
@@ -284,10 +298,10 @@ public class MediatekData implements PersistentMediatek {
 			sql = "INSERT INTO Livre (codeBarre, auteur, titre, emprunt) VALUES (?,?,?,?)";
 			break;
 		case 2:
-			sql = "INSERT INTO DVD (codeBarre, auteur, titre, emprunt, adulte) VALUES (?,?,?,?,?)";
+			sql = "INSERT INTO CD (codeBarre, auteur, titre, emprunt) VALUES (?,?,?,?)";
 			break;
 		case 3:
-			sql = "INSERT INTO CD (codeBarre, auteur, titre, emprunt) VALUES (?,?,?,?)";
+			sql = "INSERT INTO DVD (codeBarre, auteur, titre, emprunt, adulte) VALUES (?,?,?,?,?)";
 			break;
 		default:
 			return;
@@ -319,12 +333,16 @@ public class MediatekData implements PersistentMediatek {
 				} else {
 					pstmt.setInt(5, 0);
 				}
+				
 				break;
 			default:
 				break;
 			}
 			// On exectute la requête
 			pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -339,7 +357,7 @@ public class MediatekData implements PersistentMediatek {
 	 * @throws SuppressException - Si le document n'existe pas
 	 */
 	@Override
-	public void suppressDoc(int numDoc) throws SuppressException {
+	public synchronized void suppressDoc(int numDoc) throws SuppressException {
 		// On initialise un document
 		Document document;
 
@@ -351,13 +369,13 @@ public class MediatekData implements PersistentMediatek {
 
 		document = getDocument(numDoc, 2);
 		if (document != null) {
-			suppressDoc(numDoc, 1);
+			suppressDoc(numDoc, 2);
 			return;
 		}
 
 		document = getDocument(numDoc, 3);
 		if (document != null) {
-			suppressDoc(numDoc, 1);
+			suppressDoc(numDoc, 3);
 			return;
 		}
 		
@@ -370,7 +388,7 @@ public class MediatekData implements PersistentMediatek {
 	 * @param numDoc - Numéro du document que nous cherchons à supprimer.
 	 * @throws SuppressException - Si le document n'existe pas
 	 */
-	public void suppressDoc(int numDoc, int type) throws SuppressException {
+	private void suppressDoc(int numDoc, int type) {
 
 		// Connexion à la base de données
 		Connection conn = getConnection();
@@ -382,10 +400,10 @@ public class MediatekData implements PersistentMediatek {
 			sql = "DELETE FROM Livre WHERE codeBarre=?";
 			break;
 		case 2:
-			sql = "DELETE FROM DVD WHERE codeBarre=?";
+			sql = "DELETE FROM CD WHERE codeBarre=?";
 			break;
 		case 3:
-			sql = "DELETE FROM CD WHERE codeBarre=?";
+			sql = "DELETE FROM DVD WHERE codeBarre=?";
 			break;
 		default:
 			return;
@@ -399,10 +417,14 @@ public class MediatekData implements PersistentMediatek {
 			
 			pstmt.executeUpdate();
 			
+			pstmt.close();
+			conn.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		
 	}
 
 	/**

@@ -59,7 +59,11 @@ public class DocumentServlet extends HttpServlet {
 			}
 			
 			if (doc.data().length>5)  {
-				request.setAttribute("adulte", doc.data()[5]);
+				if ((boolean) doc.data()[5]) {
+					request.setAttribute("adulte", "Oui");
+				}else {
+					request.setAttribute("adulte", "Non");
+				}
 			}
 		
 		
